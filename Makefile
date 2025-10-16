@@ -1,13 +1,15 @@
 CC=clang
-CFLAGS=-Wall -Wextra -Werror -std=c11 -pedantic
+CFLAGS=-Wall -Wextra -Werror -std=c11 -pedantic -pthread
+LDFLAGS=-pthread
 
 .PHONY: all
 all: word-count mr.o
 
 word-count: word-count.c kvlist.o mr.o hash.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 %.o : %.c %.h
-	$(CC) $(CFLAGS) $< -c
+	$(CC) $(CFLAGS) -c $<
 
 .PHONY: clean
 clean:
